@@ -1,3 +1,8 @@
+function getTheRightData(file){
+	var outputFile = file.replace(/,/g,".").substring(file.indexOf(";-------")+11, file.indexOf("-------;", file.indexOf(";-------")) - 3);
+	return outputFile.length > 20 ? outputFile : file;
+}
+
 exports.getData = function(){	
 	var baby = require("babyparse");
 	var fs = require('fs');
@@ -6,7 +11,8 @@ exports.getData = function(){
 	//var file = fs.readFileSync("public/files/veelData.csv").toString();
 	var file = fs.readFileSync("public/files/betereData.csv").toString();
 	//var file = fs.readFileSync("public/files/realData.csv").toString();
-
+	file = getTheRightData(file);
+	
 	return baby.parse(file, {	header: true,					//First row will be interpreted as field names.
 														fastMode: true,				//Speeds up parsing for files that contain no quotes.
 														skipEmptyLines: true,	//Skips empty lines.
@@ -25,7 +31,7 @@ exports.parseData = function(req){
 	for(var i = 0; i < inputData.data.length; i++){
 		var resultObject = {};
 		var currentEntry = inputData.data[i];
-		
+
 		var date 									= currentEntry.Date + " " + currentEntry.Time;
 		var basalRate 						= currentEntry["Basal Rate (U/h)"];
 		var bgReading 						= currentEntry["BG Reading (mmol/L)"];
@@ -46,6 +52,7 @@ exports.parseData = function(req){
 			}
 		}
 	}
+	
 	resultData.sort(function (a, b) {	//sort when done
 		if (a.date > b.date)
 			return 1;
