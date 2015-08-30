@@ -5,8 +5,7 @@ function addLeadingZeros(input){
 }
 
 Date.prototype.toString = function(){
-	return this.getFullYear() + "/" + addLeadingZeros(this.getMonth()+1) + "/" + addLeadingZeros(this.getDate()) + " " +
-				 addLeadingZeros(this.getHours()) + ":" + addLeadingZeros(this.getMinutes()) + ":" + addLeadingZeros(this.getSeconds());
+	return AmCharts.formatDate(this, "YYYY/MM/DD JJ:NN:SS");
 }
 
 var startDate = new Date('2007/08/10 00:00:00');
