@@ -28,53 +28,59 @@ $(document).ready(function() {
 	
 		var lastKnownBasal = undefined;
 		
-		//split the data in 5 day pieces
-		for(var i = 0; i < Math.round(totalTime/518399000); i++){
+		//split the data in x day pieces
+		var timePeriod = 6*86400000;
+		var parts = Math.round(totalTime/(timePeriod-1000));
+		var resultGraphsData = [];
+		for(var i = 0; i < parts; i++){
 			var date1 = lastDate;
-			var date2 = new Date(lastDate.getTime()+518400000);
-			var resGraphData = [];
-			
-			var firstPointAtStart = false;
-			for(var j = 0; j < data.length; j++){	//optimise by not looping entire data everytime, with modulo instead
-				if(data[j].basalRate != undefined)
-					lastKnownBasal = data[j].basalRate;
-				if(data[j].date >= date1.toString() && data[j].date <= date2.toString()){
-					if(!firstPointAtStart){ //add data point at start of split with last known basal rate
-						if(data[j].date == date1.toString()){
-							resGraphData.push(data[j]);
-						}else{
-							if(lastKnownBasal != undefined)
-								resGraphData.push({date: date1, basalRate: lastKnownBasal});
-							else{
-								resGraphData.push({date: date1});
-							}
-						}
-						firstPointAtStart = true;
-					}else{
-						resGraphData.push(data[j]);
-					}
-				}
-			}
-			//add data point at end of split with last known basal rate
-			if(resGraphData.length == 0){	//if graph split is empty, still make it visible by adding two empty points
-				resGraphData.push({date: date1});	//EMPTY GRAPHS ARE HIDDEN ATM SEE BELOW
-				resGraphData.push({date: date2});
-			}else{
-				if(resGraphData[resGraphData.length-1].date != date2.toString()){
-					if(lastKnownBasal != undefined)
-						resGraphData.push({date: date2.toString(), basalRate: lastKnownBasal});
-					else
-						resGraphData.push({date: date2.toString()});
-				}
-			}
+			var date2 = new Date(date1.getTime()+timePeriod);
+			resultGraphsData.push({	periodStartDate: date1,
+															periodEndDate: date2,
+															periodGraphData: []});
 			lastDate = date2;
 			
-			//make graphs for every chunk
-			if(resGraphData.length > 2){	//hide all empty charts for now
-				$(".chartcontainer").append( "<div id=\"chart_" + i + "\"></div>" );
-				buildChart("chart_" + i, resGraphData);
+		}
+		
+		for(var i = 0; i < data.length; i++){
+			if(data[i].basalRate != undefined) lastKnownBasal = data[i].basalRate;
+			for(var j = 0; j < resultGraphsData.length; j++){
+				if(data[i].date >= resultGraphsData[j].periodStartDate.toString() && data[i].date < resultGraphsData[j].periodEndDate.toString()){
+					if(resultGraphsData[j].firstKnownBasal == undefined) resultGraphsData[j].firstKnownBasal = lastKnownBasal;
+					resultGraphsData[j].lastKnownBasal = lastKnownBasal;
+					resultGraphsData[j].periodGraphData.push(data[i]);
+				}
 			}
 		}
+		
+		for(var j = 0; j < resultGraphsData.length; j++){
+			if(resultGraphsData[j].periodGraphData.length != 0){
+				if(resultGraphsData[j].firstKnownBasal != undefined){
+				resultGraphsData[j].periodGraphData.unshift({	date: resultGraphsData[j].periodStartDate,
+																											basalRate: resultGraphsData[j].firstKnownBasal});
+				}else{
+					resultGraphsData[j].periodGraphData.unshift({date: resultGraphsData[j].periodStartDate})
+				}
+				
+				if(resultGraphsData[j].lastKnownBasal != undefined){
+									resultGraphsData[j].periodGraphData.push({date: resultGraphsData[j].periodEndDate,
+																														basalRate: resultGraphsData[j].lastKnownBasal})
+				}else{
+					resultGraphsData[j].periodGraphData.push({date: resultGraphsData[j].periodEndDate})
+				}
+				
+				//make graphs for every chunk
+				if(resultGraphsData[j].periodGraphData.length > 2){
+					$(".chartcontainer").append( "<div id=\"chart_" + j + "\"></div>" );
+					buildChart("chart_" + j, resultGraphsData[j].periodGraphData);
+				}
+				
+				//console.log(resultGraphsData[j].periodGraphData);
+			}
+			
+			
+		}
+		
 	});
 });
 
