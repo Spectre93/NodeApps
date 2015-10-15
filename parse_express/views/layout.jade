@@ -1,0 +1,18 @@
+doctype html
+html(lang='en')
+	head
+		//meta(http-equiv='Content-Type', content='text/html;charset=utf-8')
+		link(rel='stylesheet', type="text/css", href='stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', type="text/css", href='stylesheets/style.css')
+		script(type='text/javascript', src='javascripts/jquery-2.1.4.min.js')
+		block title
+			title= Title	
+		block head
+	body
+		nav.navbar.navbar-inverse.navbar-fixed-top
+			.container
+				a.navbar-brand(href='/') HagaZiekenhuis
+				ul.nav.navbar-nav
+					block navBar
+					
+		block bodyContent

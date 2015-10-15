@@ -1,0 +1,20 @@
+extends ./layout.jade
+
+block head
+	script(type='text/javascript', src='javascripts/home.js')
+	
+block navBar
+	li.active
+		a(href='/') Home
+	li
+		a(href='/table') Table
+	li
+		a(href='/graph') Graph
+		
+block bodyContent
+	.jumbotron
+		h1 Home
+		
+		input#search(type="search", placeholder="Search")
+		h2#results
+		
