@@ -4,25 +4,7 @@ block head
 	script(type='text/javascript', src='javascripts/table.js')
 	script(type='text/javascript', src='javascripts/dataTables/jquery.dataTables.min.js')
 	script(type='text/javascript', src='javascripts/dataTables/dataTables.bootstrap.min.js')
-	
-	script(type='text/javascript', src='javascripts/dataTables/dataTables.fixedHeader.min.js')
-	script(type='text/javascript', src='javascripts/dataTables/dataTables.fixedColumns.min.js')
-	// script(type='text/javascript', src='javascripts/dataTables/buttons.bootstrap.min.js')
-	// script(type='text/javascript', src='javascripts/dataTables/buttons.colVis.min.js')
-	// script(type='text/javascript', src='javascripts/dataTables/buttons.flash.min.js')
-	// script(type='text/javascript', src='javascripts/dataTables/buttons.html5.min.js')
-	// script(type='text/javascript', src='javascripts/dataTables/buttons.print.min.js')
-	
 	link(rel='stylesheet', type="text/css", href='stylesheets/dataTables/dataTables.bootstrap.min.css')
-	//link(rel='stylesheet', href='stylesheets/dataTables/buttons.bootstrap.min.css')
-
-block navBar
-	li
-		a(href='/') Home
-	li.active
-		a(href='/table') Table
-	li
-		a(href='/graph') Graph
 		
 block bodyContent
 	.tableContainer
@@ -40,36 +22,3 @@ block bodyContent
 							if(Blacklist.indexOf(i) == -1)
 								td= field
 							- i = i + 1
-					
-					
-//ALL ONE TABLE		
-// block bodyContent
-	// .tableContainer
-		// table#dattable.table.table-striped
-			// thead
-				// tr
-					// each fieldName,index in Results.meta.fields
-						// th= fieldName
-			// tbody
-				// each entry in Results.data
-					// tr
-						// each field in entry
-							// td= field
-							
-//TWO TABLES							
-// block bodyContent
-	// .tableHeader
-		// div
-			// table#dattable.table.table-striped
-				// thead
-					// tr
-						// each fieldName,index in Results.meta.fields
-							// th= fieldName
-	// .tableContent
-		// div
-			// table#dattable2.table.table-striped
-				// tbody
-					// each entry in Results.data
-						// tr
-							// each field in entry
-								// td= field							

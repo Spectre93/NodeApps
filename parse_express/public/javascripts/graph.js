@@ -4,7 +4,7 @@ $.get( '/getGraphData',parameters, function(data) {
 		//console.log(data.sort());
 		
 		var data = [ 	{ date: '2015/03/01 00:10:56', value: 40 },
-									{ date: '2015/04/16 00:14:19', value: 60 },
+									{ date: '2015/03/16 01:14:19', value: 60 },
 									{ date: '2015/04/16 23:34:23', value: 61 },
 									{ date: '2015/05/16 11:39:34', value: 30 },
 									{ date: '2015/06/21 14:25:36', value: 10 },
@@ -13,13 +13,20 @@ $.get( '/getGraphData',parameters, function(data) {
 									{ date: '2015/08/17 11:10:54', value: 25 },
 									{ date: '2015/09/17 11:11:15', value: 25 },
 									{ date: '2015/10/17 11:55:23', value: 15 } ];
+									
+		var data = [ 	{ date: '00:10:56', value: 40 },
+									{ date: '01:14:19', value: 60 },
+									{ date: '23:34:23', value: 61 },
+									{ date: '11:39:34', value: 30 },
+									{ date: '14:25:36', value: 10 },
+									{ date: '18:29:25', value: 13 },
+									{ date: '11:09:37', value: 25 },
+									{ date: '11:10:54', value: 25 },
+									{ date: '11:11:15', value: 25 },
+									{ date: '11:55:23', value: 15 } ];
 	
 		buildChart(data.sort());
 });
-
-// function replaceAll(find, replace, str) {
-  // return str.replace(new RegExp(find, 'g'), replace);
-// }
 
 var chart = {};
 function buildChart(data){
@@ -28,7 +35,8 @@ function buildChart(data){
     "theme": "light",
     "marginRight": 80,
     "autoMarginOffset": 20,
-    "dataDateFormat": "YYYY/MM/DD HH:NN:SS",
+    //"dataDateFormat": "YYYY/MM/DD HH:NN:SS",
+		"dataDateFormat": "HH:NN:SS",
     "valueAxes": [{
         "id": "v1",
         "axisAlpha": 0,
@@ -50,12 +58,12 @@ function buildChart(data){
         "useLineColorForBulletBorder": true,
         "valueField": "value",
         //"balloonText": "<div style='margin:5px; font-size:19px;'><span style='font-size:13px;'>[[category]]</span><br>[[value]]</div>"
-				"balloonText": "Ayy Lmao [[value]]"
+				"balloonText": "Op [[category]] <br> was de waarde: <b>[[value]]\b"
     }],
     "chartScrollbar": {
         "graph": "g1",
         "oppositeAxis":false,
-        "offset":30,
+        "offset":100,
         "scrollbarHeight": 80,
         "backgroundAlpha": 0,
         "selectedBackgroundAlpha": 0.1,
@@ -69,7 +77,7 @@ function buildChart(data){
     },
     "chartCursor": {
 				"categoryBalloonText": "[[category]]",
-        "pan": true,	//slepen om in te zoomen
+        //"pan": true,	//slepen om in te zoomen
         "valueLineEnabled": true,
         "valueLineBalloonEnabled": true,
         "cursorAlpha":0,
@@ -78,15 +86,13 @@ function buildChart(data){
     "categoryField": "date",
     "categoryAxis": {
 				//"dateFormats": [],
-				"equalSpacing" : true,
+				//"equalSpacing" : false,
 				//"autoGridCount" :false,
 				//"gridCount": 10,
 				//"gridPosition": "start",
-
-
-        "parseDates": true,
-        "dashLength": 1,
-        "minorGridEnabled": true,
+        //"parseDates": false,
+        //"dashLength": 1,
+        //"minorGridEnabled": true,
 				"labelRotation": 45
     },
     "export": {
@@ -94,19 +100,13 @@ function buildChart(data){
     },
     "dataProvider": data
 	});
-
 	chart.addListener("rendered", zoomChart);
-	
 	zoomChart();
-
-	
 }
 
 function zoomChart() {
 	chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
 }
-
-
 
 var array = [{
         "date": "2012-07-27",
