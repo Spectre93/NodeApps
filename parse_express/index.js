@@ -12,8 +12,35 @@ app.get('/index', function (req, res) {
    res.status(404).send('Sorry, we cannot find that!');
 });
 
-var blacklist = [4,5,13,14,15,16,17,18,30,31,32,19,20,21,22,23,24,25,26,27,28,29]
+var blacklist = []//[4,5,13,14,15,16,17,18,30,31,32,19,20,21,22,23,24,25,26,27,28,29]
+
 /* 
+
+"Date":"2015/08/10"
+"Time":"14:05:00"
+"Basal Rate (U/h)"
+
+"Temp Basal Amount"
+"Temp Basal Type"
+"Temp Basal Duration (h:mm:ss)"
+
+"Bolus Type"
+"Bolus Volume Selected (U)"
+"Bolus Volume Delivered (U)"
+"Programmed Bolus Duration (h:mm:ss)"
+
+"BWZ Estimate (U)"
+"BWZ Target High BG (mmol/L)"
+"BWZ Target Low BG (mmol/L)"
+"BWZ Carb Ratio (g/U)"
+"BWZ Insulin Sensitivity (mmol/L/U)"
+"BWZ Carb Input (grams)"
+"BWZ BG Input (mmol/L)"
+"BWZ Correction Estimate (U)"
+"BWZ Food Estimate (U)"
+"BWZ Active Insulin (U)"
+
+
 var results = {"data":
 0							[{"Index":1,
 								"Date":"2015/08/10",

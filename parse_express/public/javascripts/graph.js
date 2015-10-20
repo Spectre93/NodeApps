@@ -1,20 +1,29 @@
 var parameters = { /*search: $(this).val()*/ };
 var results = {};
-$.get( '/getGraphData',parameters, function(data) {		
-		//console.log(data.sort());
-		
-		var data = [ 	{ date: '2015/03/01 00:10:56', value: 40 },
-									{ date: '2015/03/16 01:14:19', value: 60 },
-									{ date: '2015/04/16 23:34:23', value: 61 },
-									{ date: '2015/05/16 11:39:34', value: 30 },
-									{ date: '2015/06/21 14:25:36', value: 10 },
-									{ date: '2015/06/21 18:29:25', value: 13 },
-									{ date: '2015/07/17 11:09:37', value: 25 },
-									{ date: '2015/08/17 11:10:54', value: 25 },
-									{ date: '2015/09/17 11:11:15', value: 25 },
-									{ date: '2015/10/17 11:55:23', value: 15 } ];
+$.get( '/getGraphData',parameters, function(data) {				
+		var data = [ 	{ date: '2015-09-28 00:10:56', value: 40 },
+									{ date: '2015-09-28 00:14:19', value: 60 },
+									{ date: '2015-09-28 01:34:23', value: 61 },
+									{ date: '2015-09-28 09:45:34', value: 30 },
+									{ date: '2015-09-28 09:45:36', value: 10 },
+									{ date: '2015-09-28 12:29:25', value: 13 },
+									{ date: '2015-09-28 12:30:37', value: 25 },
+									{ date: '2015-09-28 18:10:54', value: 25 },
+									{ date: '2015-09-28 19:11:15', value: 25 },
+									{ date: '2015-09-28 22:55:23', value: 15 },
+
+									{ date: '2015-09-29 00:10:56', value: 40 },
+									{ date: '2015-09-29 00:14:19', value: 60 },
+									{ date: '2015-09-29 01:34:23', value: 61 },
+									{ date: '2015-09-29 09:39:34', value: 30 },
+									{ date: '2015-09-29 09:45:36', value: 10 },
+									{ date: '2015-09-29 12:29:25', value: 13 },
+									{ date: '2015-09-29 12:30:37', value: 25 },
+									{ date: '2015-09-29 18:10:54', value: 25 },
+									{ date: '2015-09-29 19:11:15', value: 25 },
+									{ date: '2015-09-29 22:55:23', value: 15 }];
 									
-		var data = [ 	{ date: '00:10:56', value: 40 },
+		var data2 = [ 	{ date: '00:10:56', value: 40 },
 									{ date: '01:14:19', value: 60 },
 									{ date: '23:34:23', value: 61 },
 									{ date: '11:39:34', value: 30 },
@@ -25,7 +34,8 @@ $.get( '/getGraphData',parameters, function(data) {
 									{ date: '11:11:15', value: 25 },
 									{ date: '11:55:23', value: 15 } ];
 	
-		buildChart(data.sort());
+		console.log(data);
+		buildChart(data);
 });
 
 var chart = {};
@@ -33,79 +43,69 @@ function buildChart(data){
 	chart = AmCharts.makeChart("chartdiv", {
     "type": "serial",
     "theme": "light",
-    "marginRight": 80,
-    "autoMarginOffset": 20,
-    //"dataDateFormat": "YYYY/MM/DD HH:NN:SS",
-		"dataDateFormat": "HH:NN:SS",
-    "valueAxes": [{
-        "id": "v1",
-        "axisAlpha": 0,
-        "position": "left"
-    }],
+    "dataDateFormat": "YYYY-MM-DD JJ:NN:SS",
+		"balloonDateFormat": "DD-MM-YYYY JJ:NN",
     "balloon": {
-        "borderThickness": 1,
+				"animationDuration": 0,
         "shadowAlpha": 0
     },
+		"maxSelectedTime": 86400000,
     "graphs": [{
-        "id": "g1",
+				"id": "g1",
         "bullet": "round",
-        "bulletBorderAlpha": 1,
-        "bulletColor": "#FFFFFF",
-        "bulletSize": 5,
-        "hideBulletsCount": 50,
         "lineThickness": 2,
-        "title": "red line",
-        "useLineColorForBulletBorder": true,
         "valueField": "value",
-        //"balloonText": "<div style='margin:5px; font-size:19px;'><span style='font-size:13px;'>[[category]]</span><br>[[value]]</div>"
-				"balloonText": "Op [[category]] <br> was de waarde: <b>[[value]]\b"
-    }],
+				"balloonText": "Om [[category]]: <b>[[value]]\b"
+    },{
+				"id": "g2",
+        "bullet": "round",
+        "lineThickness": 2,
+        "valueField": "value",
+				"balloonText": "Om [[category]]: <b>[[value]]\b"
+		}],
     "chartScrollbar": {
         "graph": "g1",
-        "oppositeAxis":false,
-        "offset":100,
-        "scrollbarHeight": 80,
-        "backgroundAlpha": 0,
-        "selectedBackgroundAlpha": 0.1,
-        "selectedBackgroundColor": "#888888",
-        "graphFillAlpha": 0,
-        "graphLineAlpha": 0.5,
-        "selectedGraphFillAlpha": 0,
-        "selectedGraphLineAlpha": 1,
-        "autoGridCount":true,
-        "color":"#AAAAAA"
+				"graphType": "line",				
+				"hideResizeGrips": true,
+				"resizeEnabled": false,
+				"scrollDuration": 5
     },
     "chartCursor": {
+				"categoryBalloonDateFormat": "JJ:NN",
 				"categoryBalloonText": "[[category]]",
-        //"pan": true,	//slepen om in te zoomen
+        //"pan": true,
         "valueLineEnabled": true,
-        "valueLineBalloonEnabled": true,
+        //"valueLineBalloonEnabled": true,
         "cursorAlpha":0,
-        "valueLineAlpha":0.2
+        "valueLineAlpha":0.3
     },
     "categoryField": "date",
     "categoryAxis": {
-				//"dateFormats": [],
-				//"equalSpacing" : false,
-				//"autoGridCount" :false,
-				//"gridCount": 10,
-				//"gridPosition": "start",
-        //"parseDates": false,
-        //"dashLength": 1,
-        //"minorGridEnabled": true,
-				"labelRotation": 45
-    },
-    "export": {
-        "enabled": true
-    },
+				"centerLabels": false,
+				"boldPeriodBeginning": false,
+        "parseDates": true,
+        "minorGridEnabled": true,
+				"labelRotation": 45,
+				"minPeriod": "mm"
+    },"valueAxes": [{
+			"strictMinMax": true,
+			"title": "BGL (mmol/L)",
+			"minimum": 0
+		}],
+		"titles": [{
+			"size": 15,
+			"text": "BGL (mmol/L) per time period"
+		}
+	],
     "dataProvider": data
 	});
 	chart.addListener("rendered", zoomChart);
 	zoomChart();
+	
 }
 
 function zoomChart() {
-	chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+	chart.zoomToIndexes(0,7);
 }
 
 var array = [{
