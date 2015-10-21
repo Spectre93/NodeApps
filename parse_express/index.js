@@ -19,6 +19,7 @@ var blacklist = []//[4,5,13,14,15,16,17,18,30,31,32,19,20,21,22,23,24,25,26,27,2
 "Date":"2015/08/10"
 "Time":"14:05:00"
 "Basal Rate (U/h)"
+"BG Reading (mmol/L)"
 
 "Temp Basal Amount"
 "Temp Basal Type"
@@ -88,6 +89,7 @@ function getData(){
 	var baby = require("babyparse");
 	var fs = require('fs');
 	var file = fs.readFileSync("public/files/veelData.csv").toString();
+	var file = fs.readFileSync("public/files/betereData.csv").toString();
 
 	return baby.parse(file, {	
 		header: true,					//First row will be interpreted as field names.
@@ -137,27 +139,43 @@ app.post('/file_upload', function (req, res) {
 });
 
 app.get('/getGraphData', function(req, res){
-/* 	var inputData = getData();
-	
+ 	var inputData = getData();
 	var resultData = [];
 		for(var i = 0; i < inputData.data.length; i++){
-			if(inputData.data[i]["BWZ Carb Input (grams)"] != ""){
-				resultData.push({date: inputData.data[i].Date + " " + inputData.data[i].Time, value: inputData.data[i]["BWZ Carb Input (grams)"]})
+			var resultObject = {};
+			var currentEntry = inputData.data[i];
+			
+			var date 									= currentEntry.Date + " " + currentEntry.Time;
+			var basalRate 						= currentEntry["Basal Rate (U/h)"];
+			var bgReading 						= currentEntry["BG Reading (mmol/L)"];
+			var bolusVolumeSelected 	= currentEntry["Bolus Volume Selected (U)"];
+			var bolusVolumeDelivered 	= currentEntry["Bolus Volume Delivered (U)"];
+			var bwzCarbInputG 				= inputData.data[i]["BWZ Carb Input (grams)"];
+			
+			if(basalRate != ""){						resultObject.basalRate 						= basalRate;}
+			if(bgReading != ""){						resultObject.bgReading 						= bgReading;}			
+			if(bolusVolumeSelected != ""){	resultObject.bolusVolumeSelected 	= bolusVolumeSelected;}
+			if(bolusVolumeDelivered != ""){	resultObject.bolusVolumeDelivered = bolusVolumeDelivered;}			
+			if(bwzCarbInputG != ""){				resultObject.bwzCarbInputG 				= bwzCarbInputG;}
+			
+			if(Object.keys(resultObject).length != 0){	//if empty object, don't add the date				
+				//if(date > "2015/01/01 00:00:00" && date < "2015/05/01 00:00:00"){
+				if(date >= "10/08/2015 00:00:00" && date <= "11/08/2015 00:00:00"){
+					resultObject.date = date;
+					resultData.push(resultObject);
+				}
 			}
 		}
 		resultData.sort(function (a, b) {
-			if (a.date > b.date) {
+			if (a.date > b.date)
 				return 1;
-			}
-			if (a.date < b.date) {
+			else if (a.date < b.date)
 				return -1;
-			}
-			a must be equal to b
-			return 0;
+			else 
+				return 0;
 		});
   res.send(resultData);
-	console.log(resultData); */
-	res.send();
+	//res.send();
 });
 
 app.get('/graph', function(req, res){
@@ -171,5 +189,5 @@ var server = app.listen(3000, function () {
   var host = server.address().address
   var port = server.address().port
 
-  console.log("Example app listening at http://%s:%s", host, port);
+  console.log("Listening at http://%s:%s", host, port);
 });
