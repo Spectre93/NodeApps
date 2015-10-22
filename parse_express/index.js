@@ -80,8 +80,12 @@ var results = {"data":
 								"errors":[],
 								"meta":{"delimiter":";","linebreak":"\r\n","aborted":false,"truncated":false,
 									"fields":["Index","Date","Time","New Device Time","BG Reading (mmol/L)","Linked BG Meter ID","Basal Rate (U/h)","Temp Basal Amount","Temp Basal Type","Temp Basal Duration (h:mm:ss)","Bolus Type","Bolus Volume Selected (U)","Bolus Volume Delivered (U)","Programmed Bolus Duration (h:mm:ss)","Prime Type","Prime Volume Delivered (U)","Alarm","Suspend","Rewind","BWZ Estimate (U)","BWZ Target High BG (mmol/L)","BWZ Target Low BG (mmol/L)","BWZ Carb Ratio (g/U)","BWZ Insulin Sensitivity (mmol/L/U)","BWZ Carb Input (grams)","BWZ BG Input (mmol/L)","BWZ Correction Estimate (U)","BWZ Food Estimate (U)","BWZ Active Insulin (U)","Sensor Calibration BG (mmol/L)","Sensor Glucose (mmol/L)","ISIG Value","Event Marker"]}} */							
-							
+			
 app.get('/', function (req, res) {
+	res.redirect('/Home');
+});
+			
+app.get('/home', function (req, res) {
 	res.render('home', {title: 'Home'});
 });
 
@@ -90,6 +94,7 @@ function getData(){
 	var fs = require('fs');
 	//var file = fs.readFileSync("public/files/veelData.csv").toString();
 	var file = fs.readFileSync("public/files/betereData.csv").toString();
+	//var file = fs.readFileSync("public/files/realData.csv").toString();
 
 	return baby.parse(file, {	
 		header: true,					//First row will be interpreted as field names.
