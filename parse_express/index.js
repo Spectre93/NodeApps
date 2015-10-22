@@ -184,6 +184,10 @@ app.get('/graph', function(req, res){
   res.render('graph', {title: 'Graph'});
 });
 
+app.get('/moregraphs', function(req, res){
+  res.render('moreGraphs', {title: 'More graphs'});
+});
+
 if (app.get('env') === 'development')
 	app.locals.pretty = true;	//if not pretty, is minified
 

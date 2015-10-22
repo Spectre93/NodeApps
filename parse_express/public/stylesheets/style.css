@@ -18,3 +18,9 @@ body{
 	height		: 500px;
 	font-size	: 11px;
 }
+
+#smallchart {
+	width		: 100%;
+	height		: 250px;
+	font-size	: 11px;
+}
