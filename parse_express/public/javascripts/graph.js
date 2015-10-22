@@ -1,4 +1,5 @@
-var parameters = { /*search: $(this).val()*/ };
+var parameters = { 	startDate: "2015/08/10 00:00:00",
+										endDate: "2015/08/11 00:00:00"};
 var results = {};
 $.get( '/getGraphData',parameters, function(data) {				
 		var staticData = [ 	{ date: '2015-09-28 00:10:56', value: 40 },
@@ -36,8 +37,8 @@ function buildChart(data){
 			"size": 15,
 			"text": "Week 25"
 		}],
-    //"dataDateFormat": "YYYY-MM-DD JJ:NN:SS",
-		"dataDateFormat": "DD-MM-YYYY JJ:NN:SS",
+    "dataDateFormat": "YYYY-MM-DD JJ:NN:SS",
+		//"dataDateFormat": "DD-MM-YYYY JJ:NN:SS",
 		"balloonDateFormat": "DD-MM-YYYY JJ:NN",
 		"mouseWheelZoomEnabled": true,
     "balloon": {
