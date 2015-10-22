@@ -88,7 +88,7 @@ app.get('/', function (req, res) {
 function getData(){
 	var baby = require("babyparse");
 	var fs = require('fs');
-	var file = fs.readFileSync("public/files/veelData.csv").toString();
+	//var file = fs.readFileSync("public/files/veelData.csv").toString();
 	var file = fs.readFileSync("public/files/betereData.csv").toString();
 
 	return baby.parse(file, {	
@@ -141,6 +141,10 @@ app.post('/file_upload', function (req, res) {
 app.get('/getGraphData', function(req, res){
  	var inputData = getData();
 	var resultData = [];
+	
+	var startDate = req.query.startDate || "0000/00/00 00:00:00";	//if undefined, use this as start date
+	var endDate = req.query.endDate || "9999/99/99 99:99:99";			//if undefined, use this as end date
+	
 		for(var i = 0; i < inputData.data.length; i++){
 			var resultObject = {};
 			var currentEntry = inputData.data[i];
@@ -159,14 +163,13 @@ app.get('/getGraphData', function(req, res){
 			if(bwzCarbInputG != ""){				resultObject.bwzCarbInputG 				= bwzCarbInputG;}
 			
 			if(Object.keys(resultObject).length != 0){	//if empty object, don't add the date				
-				//if(date > "2015/01/01 00:00:00" && date < "2015/05/01 00:00:00"){
-				if(date >= "10/08/2015 00:00:00" && date <= "11/08/2015 00:00:00"){
+				if(date >= startDate && date <= endDate){
 					resultObject.date = date;
 					resultData.push(resultObject);
 				}
 			}
 		}
-		resultData.sort(function (a, b) {
+		resultData.sort(function (a, b) {	//sort when done
 			if (a.date > b.date)
 				return 1;
 			else if (a.date < b.date)
@@ -175,7 +178,6 @@ app.get('/getGraphData', function(req, res){
 				return 0;
 		});
   res.send(resultData);
-	//res.send();
 });
 
 app.get('/graph', function(req, res){
@@ -183,7 +185,7 @@ app.get('/graph', function(req, res){
 });
 
 if (app.get('env') === 'development')
-	app.locals.pretty = true;
+	app.locals.pretty = true;	//if not pretty, is minified
 
 var server = app.listen(3000, function () {
   var host = server.address().address
