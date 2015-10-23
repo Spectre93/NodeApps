@@ -1,13 +1,18 @@
-var parameters = { 	startDate: "2015/08/10 00:00:00",
-										endDate: "2015/09/07 00:00:00"};
-var results = {};
-$.get( '/getGraphData',parameters, function(data) {
-		console.log(data);
-		buildChart(data);
+var startDate = "2015/08/10 00:00:00";
+var endDate = "2015/08/15 00:00:00";
+var parameters = {startDate: startDate,	endDate: endDate};
+
+$(document).ready(function() {
+	$.get( '/getGraphData',parameters, function(data) {
+		for(var i = 0; i < 1; i++){
+			$(".chartcontainer").append( "<div id=\"chart_" + i + "\"></div>" );
+			buildChart("chart_" + i, data);
+		}
+	});
 });
 
-function buildChart(data){
-	AmCharts.makeChart("smallchart", {
+function buildChart(id,data){
+	AmCharts.makeChart(id, {
     "type": "serial",
     "theme": "light",
 		"titles": [{
