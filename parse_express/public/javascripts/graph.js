@@ -44,7 +44,7 @@ function buildChart(data){
 		},{
 				"id": "bgReading",
 				"title": "BG Reading (mmol/L)",
-				"valueAxis": "v2",
+				"valueAxis": "v1",
         "bullet": "round",
 				"lineAlpha": 0,
         "lineThickness": 2,
@@ -81,7 +81,7 @@ function buildChart(data){
 		},{
 				"id": "bwzCarbInputG",
 				"title": "BWZ Carb Input (grams)",
-				"valueAxis": "v3",
+				"valueAxis": "v2",
         "bullet": "diamond",
 				"lineAlpha": 0,
 				"bulletSize": 12,
@@ -124,16 +124,8 @@ function buildChart(data){
 			"minimum": 0
 		},{
 			"id": "v2",
-			"title": "mmol/L",
-			"position": "right",
-			"autoGridCount": false,
-			"strictMinMax": true,
-			"minimum": 0,
-			"gridAlpha": 0
-		},{
-			"id": "v3",
 			//"title": "gram",
-			//"position": "right",
+			"position": "right",
 			"axisAlpha": 0,
 			"labelsEnabled": false,
 			"autoGridCount": false,
