@@ -14,6 +14,17 @@ function buildChart(data){
 			"size": 15,
 			"text": "Week 25"
 		}],
+		"guides": [{
+			"tickLength": 0,
+			"fillAlpha": 0.1,
+			"fillColor": "#00FF00",
+			"id": "Guide-1",
+			"lineAlpha": 0,
+			"position": "top",
+			"toValue": 8,
+			"value": 3,
+			"valueAxis": "v1"
+		}],
     "dataDateFormat": "YYYY-MM-DD JJ:NN:SS",
 		//"dataDateFormat": "DD-MM-YYYY JJ:NN:SS",
 		"balloonDateFormat": "DD-MM-YYYY JJ:NN",

@@ -26,6 +26,17 @@ function buildChart(id,data){
 				"animationDuration": 0,
         "shadowAlpha": 0
     },
+		"guides": [{
+			"tickLength": 0,
+			"fillAlpha": 0.1,
+			"fillColor": "#00FF00",
+			"id": "Guide-1",
+			"lineAlpha": 0,
+			"position": "top",
+			"toValue": 8,
+			"value": 3,
+			"valueAxis": "v1"
+		}],
     "graphs": [{
 				"id": "basalRate",
 				"valueAxis": "v1",
