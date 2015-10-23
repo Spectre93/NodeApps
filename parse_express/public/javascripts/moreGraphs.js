@@ -6,9 +6,8 @@ $.get( '/getGraphData',parameters, function(data) {
 		buildChart(data);
 });
 
-var chart = {};
 function buildChart(data){
-	chart = AmCharts.makeChart("smallchart", {
+	AmCharts.makeChart("smallchart", {
     "type": "serial",
     "theme": "light",
 		"titles": [{
@@ -22,35 +21,25 @@ function buildChart(data){
 				"animationDuration": 0,
         "shadowAlpha": 0
     },
-		//"maxSelectedTime": 604800000,
-		"maxSelectedTime": 432000000,
-		"minSelectedTime": 10800000,
     "graphs": [{
 				"id": "basalRate",
-				"title": "Basal Rate (U/h)",
 				"valueAxis": "v1",
         "lineThickness": 1,
 				"behindColumns": true,
 				"type": "step",
 				"showBalloon": false,
-        "valueField": "basalRate",
-				"balloonText": "Om [[category]]: <b>[[value]]\b"
+        "valueField": "basalRate"
 		},{
 				"id": "bgReading",
-				"title": "BG Reading (mmol/L)",
-				"valueAxis": "v2",
+				"valueAxis": "v1",
         "bullet": "round",
 				"lineAlpha": 0,
         "lineThickness": 2,
 				"bulletSize": 6,
         "valueField": "bgReading",
-				//"labelText": "[[value]] mmol/L",
-				"labelPosition": "right",
-				"showBalloon": false,
-				"balloonText": "Om [[category]]: <b>[[value]]\b"
+				"showBalloon": false
 		},{
 				"id": "bolusVolumeSelected",
-				"title": "Bolus Volume Selected (U)",
 				"valueAxis": "v1",
 				"lineColor": "#e1ede9",
 				"fillColors": "#e1ede9",
@@ -58,11 +47,9 @@ function buildChart(data){
 				"type": "column",
 				"clustered": false,
 				"columnWidth": 35,
-        "valueField": "bolusVolumeSelected",
-				"balloonText": "Om [[category]]: <b>[[value]]\b"			    
+        "valueField": "bolusVolumeSelected"
 		},{
 				"id": "bolusVolumeDelivered",
-				"title": "Bolus Volume Delivered (U)",
 				"valueAxis": "v1",
 				"lineColor": "#62cf73",
 				"fillColors": "#62cf73",
@@ -70,33 +57,22 @@ function buildChart(data){
 				"type": "column",
 				"clustered": false,
 				"columnWidth": 35,
-        "valueField": "bolusVolumeDelivered",
-				"balloonText": "Om [[category]]: <b>[[value]]\b"
+        "valueField": "bolusVolumeDelivered"
 		},{
 				"id": "bwzCarbInputG",
-				"title": "BWZ Carb Input (grams)",
-				"valueAxis": "v3",
+				"valueAxis": "v2",
         "bullet": "diamond",
 				"lineAlpha": 0,
 				"bulletSize": 8,
-				//"labelText": "[[value]]g",
 				"showBalloon": false,
-        "valueField": "bwzCarbInputG",
-				"balloonText": "Om [[category]]: <b>[[value]]\b"
+        "valueField": "bwzCarbInputG"
 		}],
-    "chartScrollbar": {
-        "graph": "basalRate",
-				"graphType": "step",				
-				"hideResizeGrips": true,
-				"resizeEnabled": false,
-				"scrollDuration": 0
-    },
     "chartCursor": {
 				"categoryBalloonDateFormat": "JJ:NN",
 				"categoryBalloonText": "[[category]]",
-        "pan": true,
+        //"pan": true,
         "valueLineEnabled": true,
-        //"valueLineBalloonEnabled": true,
+        "valueLineBalloonEnabled": true,
         "cursorAlpha":0,
         "valueLineAlpha":0.3
     },
@@ -105,42 +81,27 @@ function buildChart(data){
 				"centerLabels": false,
 				"boldPeriodBeginning": true,
         "parseDates": true,
-        "minorGridEnabled": true,
 				"labelRotation": 45,
 				"minPeriod": "mm"
     },"valueAxes": [{
 			"id": "v1",
-			"title": "U",
+			"title": "Bolus(U)/BGL(mmol/L)",
 			"position": "left",
-			//"autoGridCount": false,
-			//"minorGridEnabled": true,
-			"strictMinMax": true,
-			"minimum": 0
+			"includeAllValues": true,
+			"minorGridEnabled": true,
+			//"strictMinMax": true,
+			"minimum": 0,
+			//"maximum": 25
 		},{
 			"id": "v2",
-			"title": "mmol/L",
+			"title": "Carbohydrates (g)",
 			"position": "right",
-			"autoGridCount": false,
-			"strictMinMax": true,
+			"includeAllValues": true,
+			//"strictMinMax": true,
 			"minimum": 0,
-			"gridAlpha": 0
-		},{
-			"id": "v3",
-			//"title": "gram",
-			//"position": "right",
-			"axisAlpha": 0,
-			"labelsEnabled": false,
-			"autoGridCount": false,
-			"strictMinMax": true,
-			"minimum": 0,
+			//"maximum": 150,
 			"gridAlpha": 0
 		}],
     "dataProvider": data
 	});
-	chart.addListener("rendered", zoomChart);
-	zoomChart();
-}
-
-function zoomChart() {
-	//chart.zoomToIndexes(0,6);
 }
