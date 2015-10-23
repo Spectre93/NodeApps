@@ -1,30 +1,7 @@
 var parameters = { 	startDate: "2015/08/10 00:00:00",
 										endDate: "2015/08/11 00:00:00"};
 var results = {};
-$.get( '/getGraphData',parameters, function(data) {				
-		var staticData = [ 	{ date: '2015-09-28 00:10:56', value: 40 },
-												{ date: '2015-09-28 00:14:19', value: 60 },
-												{ date: '2015-09-28 01:34:23', value: 61 },
-												{ date: '2015-09-28 09:45:34', value: 30 },
-												{ date: '2015-09-28 09:45:36', value: 10 },
-												{ date: '2015-09-28 12:29:25', value: 13 },
-												{ date: '2015-09-28 12:30:37', value: 25 },
-												{ date: '2015-09-28 18:10:54', value: 25 },
-												{ date: '2015-09-28 19:11:15', value: 25 },
-												{ date: '2015-09-28 22:55:23', value: 15 },
-
-												{ date: '2015-09-29 00:10:56', value: 40 },
-												{ date: '2015-09-29 00:14:19', value: 60 },
-												{ date: '2015-09-29 01:34:23', value: 61 },
-												{ date: '2015-09-29 09:39:34', value: 30 },
-												{ date: '2015-09-29 09:45:36', value: 10 },
-												{ date: '2015-09-29 12:29:25', value: 13 },
-												{ date: '2015-09-29 12:30:37', value: 25 },
-												{ date: '2015-09-29 18:10:54', value: 25 },
-												{ date: '2015-09-29 19:11:15', value: 25 },
-												{ date: '2015-09-29 22:55:23', value: 15 }];
-	
-		console.log(data);
+$.get('/getGraphData',parameters,function(data){	
 		buildChart(data);
 });
 
