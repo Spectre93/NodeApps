@@ -1,12 +1,77 @@
-var startDate = "2015/08/10 00:00:00";
-var endDate = "2015/08/15 00:00:00";
-var parameters = {startDate: startDate,	endDate: endDate};
+function addLeadingZeros(input){
+	if(input<10)
+		return "0" + input;
+	return input;
+}
+
+Date.prototype.toString = function(){
+	return this.getFullYear() + "/" + addLeadingZeros(this.getMonth()+1) + "/" + addLeadingZeros(this.getDate()) + " " +
+				 addLeadingZeros(this.getHours()) + ":" + addLeadingZeros(this.getMinutes()) + ":" + addLeadingZeros(this.getSeconds());
+}
+
+var startDate = new Date('2015/08/10 00:00:00');
+var endDate = new Date('2016/09/07 00:00:00');
+
+//var startDate = "2015/08/10 00:00:00";
+//var endDate = "2015/09/07 00:00:00";
+
+var parameters = {startDate: startDate.toString(),endDate: endDate.toString()};
 
 $(document).ready(function() {
 	$.get( '/getGraphData',parameters, function(data) {
-		for(var i = 0; i < 1; i++){
-			$(".chartcontainer").append( "<div id=\"chart_" + i + "\"></div>" );
-			buildChart("chart_" + i, data);
+		var totalTime = endDate.getTime() - startDate.getTime();
+		var lastDate = startDate;
+	
+		var lastKnownBasal = undefined;
+		
+		//split the data in 5 day pieces
+		for(var i = 0; i < Math.round(totalTime/518399000); i++){
+			var date1 = lastDate;
+			var date2 = new Date(lastDate.getTime()+518400000);
+			console.log("date1: " + date1);
+			console.log("date2: " + date2);
+			var resGraphData = [];
+			
+			var firstPointAtStart = false;
+			for(var j = 0; j < data.length; j++){
+				if(data[j].basalRate != undefined)
+					lastKnownBasal = data[j].basalRate;
+				if(data[j].date >= date1.toString() && data[j].date <= date2.toString()){
+					if(!firstPointAtStart){ //add data point at start of split with last known basal rate
+						if(data[j].date == date1.toString()){
+							resGraphData.push(data[j]);
+						}else{
+							if(lastKnownBasal != undefined)
+								resGraphData.push({date: date1, basalRate: lastKnownBasal});
+							else{
+								resGraphData.push({date: date1});
+							}
+						}
+						firstPointAtStart = true;
+					}else{
+						resGraphData.push(data[j]);
+					}
+				}
+			}
+			//add data point at end of split with last known basal rate
+			if(resGraphData.length == 0){	//if graph split is empty, still make it visible by adding two empty points
+				resGraphData.push({date: date1});	//EMPTY GRAPHS ARE HIDDEN ATM SEE BELOW
+				resGraphData.push({date: date2});
+			}else{
+				if(resGraphData[resGraphData.length-1].date != date2.toString()){
+					if(lastKnownBasal != undefined)
+						resGraphData.push({date: date2.toString(), basalRate: lastKnownBasal});
+					else
+						resGraphData.push({date: date2.toString()});
+				}
+			}
+			lastDate = date2;
+			
+			//make graphs for every chunk
+			if(resGraphData.length > 2){	//hide all empty charts for now
+				$(".chartcontainer").append( "<div id=\"chart_" + i + "\"></div>" );
+				buildChart("chart_" + i, resGraphData);
+			}
 		}
 	});
 });
@@ -15,10 +80,6 @@ function buildChart(id,data){
 	AmCharts.makeChart(id, {
     "type": "serial",
     "theme": "light",
-		"titles": [{
-			"size": 15,
-			"text": "Week 25"
-		}],
     "dataDateFormat": "YYYY-MM-DD JJ:NN:SS",
 		"balloonDateFormat": "DD-MM-YYYY JJ:NN",
 		//"mouseWheelZoomEnabled": true,
