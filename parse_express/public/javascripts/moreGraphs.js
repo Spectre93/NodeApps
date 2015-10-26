@@ -9,7 +9,7 @@ Date.prototype.toString = function(){
 				 addLeadingZeros(this.getHours()) + ":" + addLeadingZeros(this.getMinutes()) + ":" + addLeadingZeros(this.getSeconds());
 }
 
-var startDate = new Date('2015/08/10 00:00:00');
+var startDate = new Date('2007/08/10 00:00:00');
 var endDate = new Date('2016/09/07 00:00:00');
 
 //var startDate = "2015/08/10 00:00:00";
@@ -19,6 +19,10 @@ var parameters = {startDate: startDate.toString(),endDate: endDate.toString()};
 
 $(document).ready(function() {
 	$.get( '/getGraphData',parameters, function(data) {
+		if(data.length == 0){
+			$(".chartcontainer").append( "<h3>Er is geen data over deze tijdsperiode.</h3>" );
+			return;
+		}
 		var totalTime = endDate.getTime() - startDate.getTime();
 		var lastDate = startDate;
 	
@@ -28,12 +32,10 @@ $(document).ready(function() {
 		for(var i = 0; i < Math.round(totalTime/518399000); i++){
 			var date1 = lastDate;
 			var date2 = new Date(lastDate.getTime()+518400000);
-			console.log("date1: " + date1);
-			console.log("date2: " + date2);
 			var resGraphData = [];
 			
 			var firstPointAtStart = false;
-			for(var j = 0; j < data.length; j++){
+			for(var j = 0; j < data.length; j++){	//optimise by not looping entire data everytime, with modulo instead
 				if(data[j].basalRate != undefined)
 					lastKnownBasal = data[j].basalRate;
 				if(data[j].date >= date1.toString() && data[j].date <= date2.toString()){
@@ -158,7 +160,7 @@ function buildChart(id,data){
 				"centerLabels": false,
 				"boldPeriodBeginning": true,
         "parseDates": true,
-				"labelRotation": 45,
+				//"labelRotation": 45,
 				"minPeriod": "mm"
     },"valueAxes": [{
 			"id": "v1",
