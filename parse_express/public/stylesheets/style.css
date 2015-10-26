@@ -14,15 +14,18 @@ body{
 }
 
 #chartdiv {
-	width		: 100%;
+	width		: 60%;
 	height		: 500px;
-	font-size	: 11px;
+	padding-top: 0.5%;
+	float:left;
 }
 
-#smallchart {
-	width		: 100%;
-	height		: 250px;
-	font-size	: 11px;
+#tablediv {
+	width		: 37%;
+	height		: 500px;
+	font-size	: 12px;
+	padding-right: 3%;
+	float:right;
 }
 
 .chartcontainer > div {
