@@ -7,12 +7,11 @@ exports.getData = function(){
 	var file = fs.readFileSync("public/files/betereData.csv").toString();
 	//var file = fs.readFileSync("public/files/realData.csv").toString();
 
-	return baby.parse(file, {	
-		header: true,					//First row will be interpreted as field names.
-		fastMode: true,				//Speeds up parsing for files that contain no quotes.
-		skipEmptyLines: true,	//Skips empty lines.
-		dynamicTyping: true,	//Numeric and boolean data will be converted to their type.
-		delimiter: ";" 				//The delimiting character. Leave blank to auto-detect.
+	return baby.parse(file, {	header: true,					//First row will be interpreted as field names.
+														fastMode: true,				//Speeds up parsing for files that contain no quotes.
+														skipEmptyLines: true,	//Skips empty lines.
+														dynamicTyping: true,	//Numeric and boolean data will be converted to their type.
+														delimiter: ";" 				//The delimiting character. Leave blank to auto-detect.
 	});
 }
 
