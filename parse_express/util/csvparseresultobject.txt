@@ -1,0 +1,67 @@
+
+"Date":"2015/08/10"
+"Time":"14:05:00"
+"Basal Rate (U/h)"
+"BG Reading (mmol/L)"
+
+"Temp Basal Amount"
+"Temp Basal Type"
+"Temp Basal Duration (h:mm:ss)"
+
+"Bolus Type"
+"Bolus Volume Selected (U)"
+"Bolus Volume Delivered (U)"
+"Programmed Bolus Duration (h:mm:ss)"
+
+"BWZ Estimate (U)"
+"BWZ Target High BG (mmol/L)"
+"BWZ Target Low BG (mmol/L)"
+"BWZ Carb Ratio (g/U)"
+"BWZ Insulin Sensitivity (mmol/L/U)"
+"BWZ Carb Input (grams)"
+"BWZ BG Input (mmol/L)"
+"BWZ Correction Estimate (U)"
+"BWZ Food Estimate (U)"
+"BWZ Active Insulin (U)"
+
+var results = {"data":
+0							[{"Index":1,
+								"Date":"2015/08/10",
+								"Time":"14:05:00",
+								"New Device Time":""
+								,"BG Reading (mmol/L)":""
+5								,"Linked BG Meter ID":""
+								,"Basal Rate (U/h)":1.4
+								,"Temp Basal Amount":""
+								,"Temp Basal Type":""
+								,"Temp Basal Duration (h:mm:ss)":""
+10								,"Bolus Type":"",
+								"Bolus Volume Selected (U)":""
+								,"Bolus Volume Delivered (U)":"",
+								"Programmed Bolus Duration (h:mm:ss)":"",
+								"Prime Type":"",
+15								"Prime Volume Delivered (U)":"",
+								"Alarm":"",
+								"Suspend":"",
+								"Rewind":"",
+								"BWZ Estimate (U)":"",
+20								"BWZ Target High BG (mmol/L)":"",
+								"BWZ Target Low BG (mmol/L)":"",
+								"BWZ Carb Ratio (g/U)":"",
+								"BWZ Insulin Sensitivity (mmol/L/U)":"",
+								"BWZ Carb Input (grams)":"",
+25								"BWZ BG Input (mmol/L)":"",
+								"BWZ Correction Estimate (U)":"",
+								"BWZ Food Estimate (U)":"",
+								"BWZ Active Insulin (U)":"",
+								"Sensor Calibration BG (mmol/L)":"",
+30								"Sensor Glucose (mmol/L)":"",
+								"ISIG Value":"",
+								"Event Marker":""}],
+								
+								"errors":[],
+								"meta":{"delimiter":";",
+												"linebreak":"\r\n",
+												"aborted":false,
+												"truncated":false,
+												"fields":["Index","Date","Time","New Device Time","BG Reading (mmol/L)","Linked BG Meter ID","Basal Rate (U/h)","Temp Basal Amount","Temp Basal Type","Temp Basal Duration (h:mm:ss)","Bolus Type","Bolus Volume Selected (U)","Bolus Volume Delivered (U)","Programmed Bolus Duration (h:mm:ss)","Prime Type","Prime Volume Delivered (U)","Alarm","Suspend","Rewind","BWZ Estimate (U)","BWZ Target High BG (mmol/L)","BWZ Target Low BG (mmol/L)","BWZ Carb Ratio (g/U)","BWZ Insulin Sensitivity (mmol/L/U)","BWZ Carb Input (grams)","BWZ BG Input (mmol/L)","BWZ Correction Estimate (U)","BWZ Food Estimate (U)","BWZ Active Insulin (U)","Sensor Calibration BG (mmol/L)","Sensor Glucose (mmol/L)","ISIG Value","Event Marker"]}}
