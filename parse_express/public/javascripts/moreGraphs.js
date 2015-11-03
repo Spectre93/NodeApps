@@ -84,6 +84,8 @@ $(document).ready(function() {
 
 function buildChart(id,data){
 	AmCharts.makeChart(id, {
+		"decimalSeparator": ",",
+		"thousandsSeparator": ".",
     "type": "serial",
     "theme": "light",
     "dataDateFormat": "YYYY-MM-DD JJ:NN:SS",

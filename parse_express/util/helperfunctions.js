@@ -1,5 +1,5 @@
 function getTheRightData(file){
-	var outputFile = file.replace(/,/g,".").substring(file.indexOf(";-------")+11, file.indexOf("-------;", file.indexOf(";-------")) - 3);
+	var outputFile = file./*replace(/,/g,".").*/substring(file.indexOf(";-------")+11, file.indexOf("-------;", file.indexOf(";-------")) - 3);
 	return outputFile.length > 20 ? outputFile : file;
 }
 
