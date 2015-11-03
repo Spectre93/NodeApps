@@ -4,16 +4,15 @@ function addLeadingZeros(input){
 	return input;
 }
 
+AmCharts.useUTC = true;
+
 Date.prototype.toString = function(){
-	return this.getFullYear() + "/" + addLeadingZeros(this.getMonth()+1) + "/" + addLeadingZeros(this.getDate()) + " " +
-				 addLeadingZeros(this.getHours()) + ":" + addLeadingZeros(this.getMinutes()) + ":" + addLeadingZeros(this.getSeconds());
+	return this.getUTCFullYear() + "/" + addLeadingZeros(this.getUTCMonth()+1) + "/" + addLeadingZeros(this.getUTCDate()) + " " +
+				 addLeadingZeros(this.getUTCHours()) + ":" + addLeadingZeros(this.getUTCMinutes()) + ":" + addLeadingZeros(this.getUTCSeconds());
 }
 
-var startDate = new Date('2007/08/10 00:00:00');
-var endDate = new Date('2016/09/07 00:00:00');
-
-//var startDate = "2015/08/10 00:00:00";
-//var endDate = "2015/09/07 00:00:00";
+var startDate = new Date('2014/05/08 00:00:00 UTC+0000');
+var endDate = new Date('2015/09/06 00:00:00 UTC+0000');
 
 var parameters = {startDate: startDate.toString(),endDate: endDate.toString()};
 
@@ -24,8 +23,7 @@ $(document).ready(function() {
 			return;
 		}
 		var totalTime = endDate.getTime() - startDate.getTime();
-		var lastDate = startDate;
-	
+		var lastDate = startDate;	
 		var lastKnownBasal = undefined;
 		
 		//split the data in x day pieces
