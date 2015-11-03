@@ -1,67 +1,143 @@
+---Index:1
+		Integer, starts at 0.
 
-"Date":"2015/08/10"
-"Time":"14:05:00"
-"Basal Rate (U/h)"
-"BG Reading (mmol/L)"
+---Date:"2015/08/10"
+		String. Format YYYY/MM/DD
+		
+---Time:"14:05:00"
+		String.
+		
+---New Device Time
+		Always 2 entries. One on the old time with new time = new time and one on the new time with new time = new time.
 
-"Temp Basal Amount"
-"Temp Basal Type"
-"Temp Basal Duration (h:mm:ss)"
+---BG Reading (mmol/L)
 
-"Bolus Type"
-"Bolus Volume Selected (U)"
-"Bolus Volume Delivered (U)"
-"Programmed Bolus Duration (h:mm:ss)"
+---Linked BG Meter ID
 
-"BWZ Estimate (U)"
-"BWZ Target High BG (mmol/L)"
-"BWZ Target Low BG (mmol/L)"
-"BWZ Carb Ratio (g/U)"
-"BWZ Insulin Sensitivity (mmol/L/U)"
-"BWZ Carb Input (grams)"
-"BWZ BG Input (mmol/L)"
-"BWZ Correction Estimate (U)"
-"BWZ Food Estimate (U)"
-"BWZ Active Insulin (U)"
+---Basal Rate (U/h)
+		Integer.
 
+---Temp Basal Amount (Integer), Temp Basal Type ("Percent"), Temp Basal Duration (h:mm:ss)
+		Generates Basal Rate entry at every change.
+
+---Bolus Type
+		String: "Normal" || "Dual (square part)" || "Dual (normal part)".
+
+---Bolus Volume Selected (U)
+		Integer.
+		
+---Bolus Volume Delivered (U)
+		Integer.
+		
+---Programmed Bolus Duration (h:mm:ss)
+		Only used if "Bolus Type" == "Dual (square part)"
+		
+---Prime Type
+		String: "Manual" || "Fixed"
+		Comes together with Rewinds
+
+---Prime Volume Delivered (U)
+		integer
+		Comes together with Rewinds
+
+---Alarm
+		String, i.e.: "BATT OUT LIMIT", "FAILED BATT TEST", "LOST SENSOR", "NO DELIVERY", "OFF NO POWER"
+		and other alarm codes
+
+---Suspend
+		String: "NORMAL_PUMPING" || "USER_SUSPEND"
+			These alarms generate "Basal Rate" changes. Suspend sets it to 0, the other back to what it was before.
+			Can happen during data upload
+
+---Rewind
+		Comes together with Primes
+		
+##########################
+#      Bolus Wizard 		 #
+##########################
+a = food (g)
+b = carb ratio
+c = current bg
+e = insulin sensitivity
+
+if current bg > high target		(d = high target)
+Total bolus estimate = a/b + (c-d)/e - active insulin
+!!!if(total bolus estimate <= 0) total bolus estimate = a/b
+
+if current bg < low target	(d = low target)
+Total bolus estimate = a/b + (c-d)/e - active insulin
+
+if current bg is in range
+Total bolus estimate = a/b
+
+if c == 0
+Total bolus estimate = a/b
+
+---BWZ Estimate (U)
+
+---BWZ Target High BG (mmol/L)
+
+---BWZ Target Low BG (mmol/L)
+
+---BWZ Carb Ratio (g/U)
+
+---BWZ Insulin Sensitivity (mmol/L/U)
+
+---BWZ Carb Input (grams)
+		//Required for BWZ calculations
+		
+---BWZ BG Input (mmol/L)
+		Required for BWZ calculations
+
+---BWZ Correction Estimate (U)
+
+---BWZ Food Estimate (U)
+
+---BWZ Active Insulin (U)
+
+##########################
+
+---Sensor Calibration BG (mmol/L)
+
+---Sensor Glucose (mmol/L)
+
+---ISIG Value					
+		http://myparadigm.eu/EN/Layout.htm
+
+---Event Marker
+
+======= Raw data ========
 var results = {"data":
 0							[{"Index":1,
 								"Date":"2015/08/10",
 								"Time":"14:05:00",
-								"New Device Time":""
-								,"BG Reading (mmol/L)":""
-5								,"Linked BG Meter ID":""
-								,"Basal Rate (U/h)":1.4
-								,"Temp Basal Amount":""
-								,"Temp Basal Type":""
-								,"Temp Basal Duration (h:mm:ss)":""
-10								,"Bolus Type":"",
-								"Bolus Volume Selected (U)":""
-								,"Bolus Volume Delivered (U)":"",
+								"New Device Time":"",
+								"BG Reading (mmol/L)":"",
+5								"Linked BG Meter ID":"",
+								"Basal Rate (U/h)":1.4,
+								"Temp Basal Amount":"",
+								"Temp Basal Type":"",
+								"Temp Basal Duration (h:mm:ss)":"",
+10							"Bolus Type":"",
+								"Bolus Volume Selected (U)":"",
+								"Bolus Volume Delivered (U)":"",
 								"Programmed Bolus Duration (h:mm:ss)":"",
 								"Prime Type":"",
-15								"Prime Volume Delivered (U)":"",
+15							"Prime Volume Delivered (U)":"",
 								"Alarm":"",
 								"Suspend":"",
 								"Rewind":"",
 								"BWZ Estimate (U)":"",
-20								"BWZ Target High BG (mmol/L)":"",
+20							"BWZ Target High BG (mmol/L)":"",
 								"BWZ Target Low BG (mmol/L)":"",
 								"BWZ Carb Ratio (g/U)":"",
 								"BWZ Insulin Sensitivity (mmol/L/U)":"",
 								"BWZ Carb Input (grams)":"",
-25								"BWZ BG Input (mmol/L)":"",
+25							"BWZ BG Input (mmol/L)":"",
 								"BWZ Correction Estimate (U)":"",
 								"BWZ Food Estimate (U)":"",
 								"BWZ Active Insulin (U)":"",
 								"Sensor Calibration BG (mmol/L)":"",
-30								"Sensor Glucose (mmol/L)":"",
+30							"Sensor Glucose (mmol/L)":"",
 								"ISIG Value":"",
-								"Event Marker":""}],
-								
-								"errors":[],
-								"meta":{"delimiter":";",
-												"linebreak":"\r\n",
-												"aborted":false,
-												"truncated":false,
-												"fields":["Index","Date","Time","New Device Time","BG Reading (mmol/L)","Linked BG Meter ID","Basal Rate (U/h)","Temp Basal Amount","Temp Basal Type","Temp Basal Duration (h:mm:ss)","Bolus Type","Bolus Volume Selected (U)","Bolus Volume Delivered (U)","Programmed Bolus Duration (h:mm:ss)","Prime Type","Prime Volume Delivered (U)","Alarm","Suspend","Rewind","BWZ Estimate (U)","BWZ Target High BG (mmol/L)","BWZ Target Low BG (mmol/L)","BWZ Carb Ratio (g/U)","BWZ Insulin Sensitivity (mmol/L/U)","BWZ Carb Input (grams)","BWZ BG Input (mmol/L)","BWZ Correction Estimate (U)","BWZ Food Estimate (U)","BWZ Active Insulin (U)","Sensor Calibration BG (mmol/L)","Sensor Glucose (mmol/L)","ISIG Value","Event Marker"]}}
+								"Event Marker":""}]
