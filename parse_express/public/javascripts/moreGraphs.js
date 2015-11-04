@@ -5,6 +5,9 @@ function addLeadingZeros(input){
 }
 
 AmCharts.useUTC = true;
+// Date.prototype.toString = function(){
+	// return AmCharts.formatDate(this.toUTCString(), "YYYY/MM/DD JJ:NN:SS");
+// }
 
 Date.prototype.toString = function(){
 	return this.getUTCFullYear() + "/" + addLeadingZeros(this.getUTCMonth()+1) + "/" + addLeadingZeros(this.getUTCDate()) + " " +
@@ -84,6 +87,7 @@ $(document).ready(function() {
 
 function buildChart(id,data){
 	AmCharts.makeChart(id, {
+		"fontSize": 9,
 		"decimalSeparator": ",",
 		"thousandsSeparator": ".",
     "type": "serial",
@@ -122,9 +126,11 @@ function buildChart(id,data){
         "lineThickness": 2,
 				"bulletSize": 6,
         "valueField": "bgReading",
-				"showBalloon": false
+				"showBalloon": false,
+				"labelText": "[[value]]",
+				"labelPosition": "right"
 		},{
-				"id": "bolusVolumeSelected",
+				"id": "bolusVolumeEstimate",
 				"valueAxis": "v1",
 				"lineColor": "#e1ede9",
 				"fillColors": "#e1ede9",
@@ -132,7 +138,7 @@ function buildChart(id,data){
 				"type": "column",
 				"clustered": false,
 				"columnWidth": 35,
-        "valueField": "bolusVolumeSelected"
+        "valueField": "bolusVolumeEstimate"
 		},{
 				"id": "bolusVolumeDelivered",
 				"valueAxis": "v1",
@@ -150,17 +156,27 @@ function buildChart(id,data){
 				"lineAlpha": 0,
 				"bulletSize": 8,
 				"showBalloon": false,
+				"labelText": "[[value]]g",
         "valueField": "bwzCarbInputG"
+		},{
+				"id": "sensorBG",
+				"valueAxis": "v1",
+        "lineThickness": 2,
+				"lineColor": "#96CBFF",
+				//"behindColumns": true,
+				//"type": "step",
+				"showBalloon": false,
+        "valueField": "sensorBG"
 		}],
-    "chartCursor": {
-				"categoryBalloonDateFormat": "JJ:NN",
-				"categoryBalloonText": "[[category]]",
+    // "chartCursor": {
+				// "categoryBalloonDateFormat": "JJ:NN",
+				// "categoryBalloonText": "[[category]]",
         //"pan": true,
-        "valueLineEnabled": true,
-        "valueLineBalloonEnabled": true,
-        "cursorAlpha":0,
-        "valueLineAlpha":0.3
-    },
+        // "valueLineEnabled": true,
+        // "valueLineBalloonEnabled": true,
+        // "cursorAlpha":0,
+        // "valueLineAlpha":0.3
+    // },
     "categoryField": "date",
     "categoryAxis": {
 				"centerLabels": false,

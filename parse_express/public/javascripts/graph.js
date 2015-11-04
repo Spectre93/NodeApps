@@ -8,12 +8,10 @@ $.get('/getGraphData',parameters,function(data){
 var chart = {};
 function buildChart(data){
 	chart = AmCharts.makeChart("chartdiv", {
+		"decimalSeparator": ",",
+		"thousandsSeparator": ".",
     "type": "serial",
     "theme": "light",
-		"titles": [{
-			"size": 15,
-			"text": "Week 25"
-		}],
 		"guides": [{
 			"tickLength": 0,
 			"fillAlpha": 0.1,
@@ -26,13 +24,14 @@ function buildChart(data){
 			"valueAxis": "v1"
 		}],
     "dataDateFormat": "YYYY-MM-DD JJ:NN:SS",
+		"balloonDateFormat": "JJ:NN",
 		//"dataDateFormat": "DD-MM-YYYY JJ:NN:SS",
-		"balloonDateFormat": "DD-MM-YYYY JJ:NN",
-		"mouseWheelZoomEnabled": true,
-    "balloon": {
-				"animationDuration": 0,
-        "shadowAlpha": 0
-    },
+		//"balloonDateFormat": "DD-MM-YYYY JJ:NN",
+		//"mouseWheelZoomEnabled": true,
+    // "balloon": {
+				// "animationDuration": 0,
+        // "shadowAlpha": 0
+    // },
 		//"maxSelectedTime": 86400000,
 		"minSelectedTime": 10800000,
 		"legend": {
@@ -50,8 +49,7 @@ function buildChart(data){
 				"behindColumns": true,
 				"type": "step",
 				"showBalloon": false,
-        "valueField": "basalRate",
-				"balloonText": "Om [[category]]: <b>[[value]]\b"
+        "valueField": "basalRate"
 		},{
 				"id": "bgReading",
 				"title": "BG Reading (mmol/L)",
@@ -63,11 +61,10 @@ function buildChart(data){
         "valueField": "bgReading",
 				"labelText": "[[value]] mmol/L",
 				"labelPosition": "right",
-				"showBalloon": false,
-				"balloonText": "Om [[category]]: <b>[[value]]\b"
+				"showBalloon": false
 		},{
-				"id": "bolusVolumeSelected",
-				"title": "Bolus Volume Selected (U)",
+				"id": "bolusVolumeEstimate",
+				"title": "BWZ Estimate (U)",
 				"valueAxis": "v1",
 				"lineColor": "#e1ede9",
 				"fillColors": "#e1ede9",
@@ -75,8 +72,8 @@ function buildChart(data){
 				"type": "column",
 				"clustered": false,
 				"columnWidth": 15,
-        "valueField": "bolusVolumeSelected",
-				"balloonText": "Om [[category]]: <b>[[value]]\b"			    
+        "valueField": "bolusVolumeEstimate",
+				"balloonText": "<b>[[value]]\b"			    
 		},{
 				"id": "bolusVolumeDelivered",
 				"title": "Bolus Volume Delivered (U)",
@@ -86,9 +83,9 @@ function buildChart(data){
 				"fillAlphas": 1,
 				"type": "column",
 				"clustered": false,
-				"columnWidth": 12,
+				"columnWidth": 15,
         "valueField": "bolusVolumeDelivered",
-				"balloonText": "Om [[category]]: <b>[[value]]\b"
+				"balloonText": "<b>[[value]]\b"
 		},{
 				"id": "bwzCarbInputG",
 				"title": "BWZ Carb Input (grams)",
@@ -98,25 +95,26 @@ function buildChart(data){
 				"bulletSize": 12,
 				"labelText": "[[value]]g",
 				"showBalloon": false,
-        "valueField": "bwzCarbInputG",
-				"balloonText": "Om [[category]]: <b>[[value]]\b"
+        "valueField": "bwzCarbInputG"
+		},{
+				"id": "sensorBG",
+				"title": "Sensor Glucose (mmol/L)",
+				"valueAxis": "v1",
+        "lineThickness": 2,
+				"lineColor": "#0D8ECF",
+				//"behindColumns": true,
+				"showBalloon": false,
+        "valueField": "sensorBG"
 		}],
-    // "chartScrollbar": {
-        // "graph": "basalRate",
-				// "graphType": "step",				
-				// "hideResizeGrips": true,
-				// "resizeEnabled": false,
-				// "scrollDuration": 0
+    // "chartCursor": {
+				// "categoryBalloonDateFormat": "JJ:NN",
+				// "categoryBalloonText": "[[category]]",
+      ////  "pan": true,
+        // "valueLineEnabled": true,
+      ////  "valueLineBalloonEnabled": true,
+        // "cursorAlpha":0,
+        // "valueLineAlpha":0.3
     // },
-    "chartCursor": {
-				"categoryBalloonDateFormat": "JJ:NN",
-				"categoryBalloonText": "[[category]]",
-        //"pan": true,
-        "valueLineEnabled": true,
-        //"valueLineBalloonEnabled": true,
-        "cursorAlpha":0,
-        "valueLineAlpha":0.3
-    },
     "categoryField": "date",
     "categoryAxis": {
 				"centerLabels": false,
@@ -146,13 +144,9 @@ function buildChart(data){
 		}],
     "dataProvider": data
 	});
-	//chart.addListener("rendered", zoomChart);
-	//zoomChart();
 }
 
-//function zoomChart() {
-	//chart.zoomToIndexes(0,7);
-//}AmCharts.makeChart( "bolusGraph", {
+AmCharts.makeChart( "bolusGraph", {
 	"creditsPosition": "bottom-right",
 	"decimalSeparator": ",",
 	"thousandsSeparator": ".",

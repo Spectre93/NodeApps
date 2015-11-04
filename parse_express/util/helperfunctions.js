@@ -11,7 +11,7 @@ exports.getData = function(){
 	//var file = fs.readFileSync("public/files/veelData.csv").toString();
 	var file = fs.readFileSync("public/files/betereData.csv").toString();
 	//var file = fs.readFileSync("public/files/realData.csv").toString();
-	file = getTheRightData(file);
+	//file = getTheRightData(file);
 	
 	return baby.parse(file, {	header: true,					//First row will be interpreted as field names.
 														fastMode: true,				//Speeds up parsing for files that contain no quotes.
@@ -35,15 +35,17 @@ exports.parseData = function(req){
 		var date 									= currentEntry.Date + " " + currentEntry.Time;
 		var basalRate 						= currentEntry["Basal Rate (U/h)"];
 		var bgReading 						= currentEntry["BG Reading (mmol/L)"];
-		var bolusVolumeSelected 	= currentEntry["Bolus Volume Selected (U)"];
+		var bolusVolumeEstimate 	= currentEntry["BWZ Estimate (U)"];
 		var bolusVolumeDelivered 	= currentEntry["Bolus Volume Delivered (U)"];
-		var bwzCarbInputG 				= inputData.data[i]["BWZ Carb Input (grams)"];
+		var bwzCarbInputG 				= currentEntry["BWZ Carb Input (grams)"];
+		var sensorBG							= currentEntry["Sensor Glucose (mmol/L)"];
 		
 		if(basalRate != ""){						resultObject.basalRate 						= basalRate;}
 		if(bgReading != ""){						resultObject.bgReading 						= bgReading;}			
-		if(bolusVolumeSelected != ""){	resultObject.bolusVolumeSelected 	= bolusVolumeSelected;}
+		if(bolusVolumeEstimate != ""){	resultObject.bolusVolumeEstimate 	= bolusVolumeEstimate;}
 		if(bolusVolumeDelivered != ""){	resultObject.bolusVolumeDelivered = bolusVolumeDelivered;}			
 		if(bwzCarbInputG != ""){				resultObject.bwzCarbInputG 				= bwzCarbInputG;}
+		if(sensorBG != ""){							resultObject.sensorBG			 				= sensorBG;}
 		
 		if(Object.keys(resultObject).length != 0){	//if empty object, don't add the date				
 			if(date >= startDate && date <= endDate){
