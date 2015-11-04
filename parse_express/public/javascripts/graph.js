@@ -152,4 +152,33 @@ function buildChart(data){
 
 //function zoomChart() {
 	//chart.zoomToIndexes(0,7);
-//}
+//}AmCharts.makeChart( "bolusGraph", {
+	"creditsPosition": "bottom-right",
+	"decimalSeparator": ",",
+	"thousandsSeparator": ".",
+  "type": "pie",
+  "theme": "light",
+	"pullOutRadius": "0%",
+	"startDuration": 0,
+		"colorField": "color",
+  "dataProvider": [ {
+    "title": "Basal",
+    "value": 50
+  },{
+    "title": "Correction",
+    "value": 14
+  },{
+    "title": "Food",
+    "value": 30,
+		"color": "#b948e9"
+  }],
+  "titleField": "title",
+  "valueField": "value",
+  "labelRadius": 5,
+
+  "radius": "42%",
+  "innerRadius": "40%",
+	//"showBalloon": false,
+  "labelText": "[[title]]: [[value]]U",
+	"balloonText": "[[percents]]%"
+});
