@@ -1,6 +1,5 @@
 body{
-	margin: 5px;
-	padding-top: 50px;
+	padding-top: 60px;
 }
 
 .jumbotron{
@@ -14,17 +13,16 @@ body{
 }
 
 #chartdiv {
-	width		: 60%;
+	width		: 70%;
 	height		: 500px;
-	padding-top: 0.5%;
 	float:left;
 }
 
 #tablediv {
-	width		: 37%;
+	width		: 27%;
 	height		: 500px;
 	font-size	: 12px;
-	padding-right: 3%;
+	padding-top: 2%;
 	float:right;
 }
 
