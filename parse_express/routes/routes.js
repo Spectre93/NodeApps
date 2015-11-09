@@ -12,7 +12,7 @@ module.exports = function(app){
 
 	app.get('/table', function (req, res) {
 		var blacklist = []//[4,5,13,14,15,16,17,18,30,31,32,19,20,21,22,23,24,25,26,27,28,29]
-		var results = helper.getData();	
+		var results = helper.getData("realData.csv");	
 		res.render('table', {	title: 'Table',
 													Results: results,
 													Blacklist: blacklist})

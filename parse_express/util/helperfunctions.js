@@ -1,17 +1,16 @@
 function getTheRightData(file){
-	var outputFile = file./*replace(/,/g,".").*/substring(file.indexOf(";-------")+11, file.indexOf("-------;", file.indexOf(";-------")) - 3);
+	var outputFile = file.substring(file.indexOf(";-------")+11, file.indexOf("-------;", file.indexOf(";-------")) - 3);
 	return outputFile.length > 20 ? outputFile : file;
 }
 
-exports.getData = function(){	
+//Possible filenames: realData || betereData
+exports.getData = function(fileName){	
 	var baby = require("babyparse");
 	var fs = require('fs');
 	
-	//FileName will be function argument later
-	//var file = fs.readFileSync("public/files/veelData.csv").toString();
-	var file = fs.readFileSync("public/files/betereData.csv").toString();
-	//var file = fs.readFileSync("public/files/realData.csv").toString();
-	//file = getTheRightData(file);
+	var file = fs.readFileSync("public/files/"+ fileName).toString();
+	if(fileName == "realData.csv")
+		file = getTheRightData(file);
 	
 	return baby.parse(file, {	header: true,					//First row will be interpreted as field names.
 														fastMode: true,				//Speeds up parsing for files that contain no quotes.
@@ -22,7 +21,7 @@ exports.getData = function(){
 }
 
 exports.parseData = function(req){
-	var inputData = this.getData();
+	var inputData = this.getData("betereData.csv");
 	var resultData = [];
 	
 	var startDate = req.query.startDate || "0000/00/00 00:00:00";	//if undefined, use this as start date
