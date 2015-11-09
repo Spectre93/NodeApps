@@ -1,3 +1,3 @@
 $(window).ready(function(){
-	var table = $('#dattable').DataTable({});	
+	var table = $('#datatable').DataTable({});	
 });
