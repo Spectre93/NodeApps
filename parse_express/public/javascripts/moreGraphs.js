@@ -30,7 +30,7 @@ $(document).ready(function() {
 		var lastKnownBasal = undefined;
 		
 		//split the data in x day pieces
-		var timePeriod = 6*86400000;
+		var timePeriod = 4*86400000;
 		var parts = Math.round(totalTime/(timePeriod-1000));
 		var resultGraphsData = [];
 		for(var i = 0; i < parts; i++){
@@ -167,16 +167,17 @@ function buildChart(id,data){
 				//"type": "step",
 				"showBalloon": false,
         "valueField": "sensorBG"
+		},{
+				"id": "rewind",
+				"title": "Rewind",
+				"valueAxis": "v3",
+				"bullet": "triangleUp",
+				"lineColor": "#000000",
+				"lineAlpha": 0,
+				"bulletSize": 12,
+				"showBalloon": false,
+        "valueField": "rewind"
 		}],
-    // "chartCursor": {
-				// "categoryBalloonDateFormat": "JJ:NN",
-				// "categoryBalloonText": "[[category]]",
-        //"pan": true,
-        // "valueLineEnabled": true,
-        // "valueLineBalloonEnabled": true,
-        // "cursorAlpha":0,
-        // "valueLineAlpha":0.3
-    // },
     "categoryField": "date",
     "categoryAxis": {
 				"centerLabels": false,
@@ -201,6 +202,16 @@ function buildChart(id,data){
 			//"strictMinMax": true,
 			"minimum": 0,
 			//"maximum": 150,
+			"gridAlpha": 0
+		},{
+			"id": "v3",
+			//"title": "rewinds",
+			"position": "right",
+			"axisAlpha": 0,
+			"labelsEnabled": false,
+			"strictMinMax": true,
+			"minimum": 0,
+			"maximum": 1,
 			"gridAlpha": 0
 		}],
     "dataProvider": data

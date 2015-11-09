@@ -25,14 +25,10 @@ function buildChart(data){
 		}],
     "dataDateFormat": "YYYY-MM-DD JJ:NN:SS",
 		"balloonDateFormat": "JJ:NN",
-		//"dataDateFormat": "DD-MM-YYYY JJ:NN:SS",
-		//"balloonDateFormat": "DD-MM-YYYY JJ:NN",
-		//"mouseWheelZoomEnabled": true,
     // "balloon": {
 				// "animationDuration": 0,
         // "shadowAlpha": 0
     // },
-		//"maxSelectedTime": 86400000,
 		"minSelectedTime": 10800000,
 		"legend": {
 			//"useGraphSettings": true,
@@ -105,16 +101,17 @@ function buildChart(data){
 				//"behindColumns": true,
 				"showBalloon": false,
         "valueField": "sensorBG"
+		},{
+				"id": "rewind",
+				"title": "Rewind",
+				"valueAxis": "v3",
+				"lineColor": "#0D8ECF",
+				"bullet": "triangleUp",
+				"lineAlpha": 0,
+				"bulletSize": 14,
+				"showBalloon": false,
+        "valueField": "rewind"
 		}],
-    // "chartCursor": {
-				// "categoryBalloonDateFormat": "JJ:NN",
-				// "categoryBalloonText": "[[category]]",
-      ////  "pan": true,
-        // "valueLineEnabled": true,
-      ////  "valueLineBalloonEnabled": true,
-        // "cursorAlpha":0,
-        // "valueLineAlpha":0.3
-    // },
     "categoryField": "date",
     "categoryAxis": {
 				"centerLabels": false,
@@ -140,6 +137,16 @@ function buildChart(data){
 			"autoGridCount": false,
 			"strictMinMax": true,
 			"minimum": 0,
+			"gridAlpha": 0
+		},{
+			"id": "v3",
+			//"title": "rewinds",
+			"position": "right",
+			"axisAlpha": 0,
+			"labelsEnabled": false,
+			"strictMinMax": true,
+			"minimum": 0,
+			"maximum": 1,
 			"gridAlpha": 0
 		}],
     "dataProvider": data

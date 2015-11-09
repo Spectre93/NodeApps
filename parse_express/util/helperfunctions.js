@@ -38,6 +38,7 @@ exports.parseData = function(req){
 		var bolusVolumeDelivered 	= currentEntry["Bolus Volume Delivered (U)"];
 		var bwzCarbInputG 				= currentEntry["BWZ Carb Input (grams)"];
 		var sensorBG							= currentEntry["Sensor Glucose (mmol/L)"];
+		var rewind								= currentEntry["Rewind"];
 		
 		if(basalRate != ""){						resultObject.basalRate 						= basalRate;}
 		if(bgReading != ""){						resultObject.bgReading 						= bgReading;}			
@@ -45,6 +46,7 @@ exports.parseData = function(req){
 		if(bolusVolumeDelivered != ""){	resultObject.bolusVolumeDelivered = bolusVolumeDelivered;}			
 		if(bwzCarbInputG != ""){				resultObject.bwzCarbInputG 				= bwzCarbInputG;}
 		if(sensorBG != ""){							resultObject.sensorBG			 				= sensorBG;}
+		if(rewind != ""){								resultObject.rewind			 					= rewind;}
 		
 		if(Object.keys(resultObject).length != 0){	//if empty object, don't add the date				
 			if(date >= startDate && date <= endDate){
