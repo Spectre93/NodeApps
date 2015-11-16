@@ -1,5 +1,31 @@
 var parameters = { 	startDate: "2015/08/10 00:00:00",
 										endDate: "2015/08/11 00:00:00"};
+
+var tableData = [{
+    "title": "Date",
+    "value": "10-08-2015"
+  },{
+    "title": "Daily carbs",
+    "value": "159 grams"
+  },{
+    "title": "BG readings",
+    "value": "4"
+  },{
+    "title": "Readings avg.",
+    "value": "11,2 mmol/L"
+  },{
+    "title": "Total daily insulin",
+    "value": "76,4 U"
+  },{
+    "title": "-Daily basal",
+    "value": "48 U"
+  },{
+    "title": "-Daily bolus",
+    "value": "28,4"
+  },{
+    "title": "Fills",
+    "value": "2 (10,3U)"
+  }];
 	
 var donutData = [{
     "title": "Basal",
@@ -12,6 +38,23 @@ var donutData = [{
     "value": 23.3,
 		"color": "#b948e9"
   }];
+	
+function buildTable(data){
+	for(var i = 0; i < data.length; i++){
+		if(i%4==0){
+			if(i==0){
+				$("#tableHeader").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
+																+"<th class=\"info\">" + data[i]["value"] + "</th></tr>");
+			}else{
+				$("#tableBody").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
+																+"<th class=\"info\">" + data[i]["value"] + "</th></tr>");
+			}
+		}else{
+			$("#tableBody").append("<tr><td>" + data[i]["title"] + "</td><td>" + data[i]["value"] + "</td></tr>");
+		}
+	}
+}
+	
 var results = {};
 $(document).ready(function(){
 	$.get('/getGraphData',parameters,function(data){	
