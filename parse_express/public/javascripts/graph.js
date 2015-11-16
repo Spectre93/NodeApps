@@ -1,8 +1,24 @@
 var parameters = { 	startDate: "2015/08/10 00:00:00",
 										endDate: "2015/08/11 00:00:00"};
+	
+var donutData = [{
+    "title": "Basal",
+    "value": 48
+  },{
+    "title": "Corr.",
+    "value": 5.1
+  },{
+    "title": "Food",
+    "value": 23.3,
+		"color": "#b948e9"
+  }];
 var results = {};
-$.get('/getGraphData',parameters,function(data){	
-		buildChart(data);
+$(document).ready(function(){
+	$.get('/getGraphData',parameters,function(data){	
+			buildChart(data);
+			buildTable(tableData);
+			buildDonutChart(donutData);
+	});
 });
 
 var chart = {};
@@ -153,33 +169,24 @@ function buildChart(data){
 	});
 }
 
-AmCharts.makeChart( "bolusGraph", {
-	"creditsPosition": "bottom-right",
-	"decimalSeparator": ",",
-	"thousandsSeparator": ".",
-  "type": "pie",
-  "theme": "light",
-	"pullOutRadius": "0%",
-	"startDuration": 0,
+function buildDonutChart(data){
+	AmCharts.makeChart( "bolusGraph", {
+		"creditsPosition": "bottom-right",
+		"decimalSeparator": ",",
+		"thousandsSeparator": ".",
+		"type": "pie",
+		"theme": "light",
+		"pullOutRadius": "0%",
+		"startDuration": 0,
 		"colorField": "color",
-  "dataProvider": [ {
-    "title": "Basal",
-    "value": 50
-  },{
-    "title": "Correction",
-    "value": 14
-  },{
-    "title": "Food",
-    "value": 30,
-		"color": "#b948e9"
-  }],
-  "titleField": "title",
-  "valueField": "value",
-  "labelRadius": 5,
-
-  "radius": "42%",
-  "innerRadius": "40%",
-	//"showBalloon": false,
-  "labelText": "[[title]]: [[value]]U",
-	"balloonText": "[[percents]]%"
-});
+		"dataProvider": data,
+		"titleField": "title",
+		"valueField": "value",
+		"labelRadius": 5,
+		"radius": "42%",
+		"innerRadius": "40%",
+		//"showBalloon": false,
+		"labelText": "[[title]]: [[value]]U",
+		"balloonText": "[[percents]]%"
+	});
+}
