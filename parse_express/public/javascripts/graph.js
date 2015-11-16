@@ -21,9 +21,8 @@ $(document).ready(function(){
 	});
 });
 
-var chart = {};
 function buildChart(data){
-	chart = AmCharts.makeChart("chartdiv", {
+	AmCharts.makeChart("chartdiv", {
 		"decimalSeparator": ",",
 		"thousandsSeparator": ".",
     "type": "serial",
@@ -41,10 +40,10 @@ function buildChart(data){
 		}],
     "dataDateFormat": "YYYY-MM-DD JJ:NN:SS",
 		"balloonDateFormat": "JJ:NN",
-    // "balloon": {
-				// "animationDuration": 0,
-        // "shadowAlpha": 0
-    // },
+    "balloon": {
+				"animationDuration": 0,
+        "shadowAlpha": 0
+    },
 		"minSelectedTime": 10800000,
 		"legend": {
 			//"useGraphSettings": true,
@@ -122,7 +121,7 @@ function buildChart(data){
 				"title": "Rewind",
 				"valueAxis": "v3",
 				"lineColor": "#0D8ECF",
-				"bullet": "triangleUp",
+				"bullet": "triangleDown",
 				"lineAlpha": 0,
 				"bulletSize": 14,
 				"showBalloon": false,

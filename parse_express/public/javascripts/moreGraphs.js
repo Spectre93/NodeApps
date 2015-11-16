@@ -171,10 +171,10 @@ function buildChart(id,data){
 				"id": "rewind",
 				"title": "Rewind",
 				"valueAxis": "v3",
-				"bullet": "triangleUp",
+				"bullet": "round",
 				"lineColor": "#000000",
 				"lineAlpha": 0,
-				"bulletSize": 12,
+				"bulletSize": 8,
 				"showBalloon": false,
         "valueField": "rewind"
 		}],
