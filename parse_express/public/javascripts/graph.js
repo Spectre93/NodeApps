@@ -38,25 +38,12 @@ var donutData = [{
     "value": 23.3,
 		"color": "#b948e9"
   }];
-	
-function buildTable(data){
-	for(var i = 0; i < data.length; i++){
-		if(i%4==0){
-			if(i==0){
-				$("#tableHeader").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
-																+"<th class=\"info\">" + data[i]["value"] + "</th></tr>");
-			}else{
-				$("#tableBody").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
-																+"<th class=\"info\">" + data[i]["value"] + "</th></tr>");
-			}
-		}else{
-			$("#tableBody").append("<tr><td>" + data[i]["title"] + "</td><td>" + data[i]["value"] + "</td></tr>");
-		}
-	}
-}
-	
-var results = {};
+
 $(document).ready(function(){
+	$(function() {
+    $( "#datepicker" ).datepicker({});
+  });
+			
 	$.get('/getGraphData',parameters,function(data){	
 			buildChart(data);
 			buildTable(tableData);
@@ -209,6 +196,22 @@ function buildChart(data){
 		}],
     "dataProvider": data
 	});
+}
+
+function buildTable(data){
+	for(var i = 0; i < data.length; i++){
+		if(i%4==0){
+			if(i==0){
+				$("#tableHeader").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
+																+"<th class=\"info\">" + data[i]["value"] + "</th></tr>");
+			}else{
+				$("#tableBody").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
+																+"<th class=\"info\">" + data[i]["value"] + "</th></tr>");
+			}
+		}else{
+			$("#tableBody").append("<tr><td>" + data[i]["title"] + "</td><td>" + data[i]["value"] + "</td></tr>");
+		}
+	}
 }
 
 function buildDonutChart(data){

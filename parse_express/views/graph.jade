@@ -6,10 +6,15 @@ block head
 	script(type='text/javascript', src='javascripts/amcharts3/light.js')
 	script(type='text/javascript', src='javascripts/amcharts3/pie.js')
 	script(type='text/javascript', src='javascripts/graph.js')
+	script(type='text/javascript', src='javascripts/jquery-ui.min.js')
+	link(rel='stylesheet', type="text/css", href='stylesheets/jquery-ui/jquery-ui.min.css')
 		
 block bodyContent
 	.bodycontainer
 		.container
+			p
+				| Date: 
+				input#datepicker(type='text')
 			#chartdiv
 			#tablediv
 				table#graphTable.table.table-bordered.table-striped
