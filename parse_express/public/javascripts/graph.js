@@ -39,15 +39,107 @@ var donutData = [{
 		"color": "#b948e9"
   }];
 
+var bolusEventRowNames = [
+	"Bolus Event",
+	"Time",
+	
+	"Recommended Bolus(U)",
+	"Bolus Type",
+	"Delivered Bolus(U)",
+	"+Square Portion(U, h:mm)",
+	"Difference (U)",
+	
+	"Food Bolus(U)",
+	"Carbs(g)",
+	"Carb Ratio(g/U)",
+	
+	"Correction Bolus(U)",
+	"BG(mmol/L)",
+	"BG Target High",
+	"BG Target Low",
+	
+	"Insulin Sens.",
+	"Active Insulin"
+];
+
+var bolusEventData = [{
+	"Index"															: 1,						//Index
+	"Time"															: "01:23",		//Time
+	
+	"BWZ Estimate (U)"									: 5.0, 						//Recommended Bolus
+	"Bolus Type"												: "Normal",			//Bolus Type
+	//"Bolus Volume Selected (U)"					: 5.0,
+	"Bolus Volume Delivered (U)"				: 5.0,
+	"Programmed Bolus Duration (h:mm:ss)": "--",				//Square part
+	"Difference (U)"										: "--",					//Calculated
+	
+	"BWZ Food Estimate (U)"							: 16.0,	//Food bolus
+	"BWZ Carb Input (grams)"						: 80,
+	"BWZ Carb Ratio (g/U)"							: 5.0,
+	
+	"BWZ Correction Estimate (U)"				: 1.1,	//Corr bolus
+	"BWZ BG Input (mmol/L)"							: 9.7,	//BGL
+	"BWZ Target High BG (mmol/L)"				: 5.6,
+	"BWZ Target Low BG (mmol/L)"				: 3.4,
+	
+	"BWZ Insulin Sensitivity (mmol/L/U)": 1.5,
+	"BWZ Active Insulin (U)"						: 0
+},{
+	"Index"															: 2,						//Index
+	"Time"															: "01:23:45",		//Time
+	
+	"BWZ Estimate (U)"									: 5.0, 						//Recommended Bolus
+	"Bolus Type"												: "Normal",			//Bolus Type
+	//"Bolus Volume Selected (U)"					: 5.0,
+	"Bolus Volume Delivered (U)"				: 5.0,
+	"Programmed Bolus Duration (h:mm:ss)": "--",				//Square part
+	"Difference (U)"										: "--",					//Calculated
+	
+	"BWZ Food Estimate (U)"							: 16.0,	//Food bolus
+	"BWZ Carb Input (grams)"						: 80,
+	"BWZ Carb Ratio (g/U)"							: 5.0,
+	
+	"BWZ Correction Estimate (U)"				: 1.1,	//Corr bolus
+	"BWZ BG Input (mmol/L)"							: 9.7,	//BGL
+	"BWZ Target High BG (mmol/L)"				: 5.6,
+	"BWZ Target Low BG (mmol/L)"				: 3.4,
+	
+	"BWZ Insulin Sensitivity (mmol/L/U)": 1.5,
+	"BWZ Active Insulin (U)"						: 0
+},{
+	"Index"															: 3,						//Index
+	"Time"															: "01:23:45",		//Time
+	
+	"BWZ Estimate (U)"									: 5.0, 						//Recommended Bolus
+	"Bolus Type"												: "Normal",			//Bolus Type
+	//"Bolus Volume Selected (U)"					: 5.0,
+	"Bolus Volume Delivered (U)"				: 5.0,
+	"Programmed Bolus Duration (h:mm:ss)": "--",				//Square part
+	"Difference (U)"										: "--",					//Calculated
+	
+	"BWZ Food Estimate (U)"							: 16.0,	//Food bolus
+	"BWZ Carb Input (grams)"						: 80,
+	"BWZ Carb Ratio (g/U)"							: 5.0,
+	
+	"BWZ Correction Estimate (U)"				: 1.1,	//Corr bolus
+	"BWZ BG Input (mmol/L)"							: 9.7,	//BGL
+	"BWZ Target High BG (mmol/L)"				: 5.6,
+	"BWZ Target Low BG (mmol/L)"				: 3.4,
+	
+	"BWZ Insulin Sensitivity (mmol/L/U)": 1.5,
+	"BWZ Active Insulin (U)"						: 0
+}];
+
 $(document).ready(function(){
 	$(function() {
     $( "#datepicker" ).datepicker({});
   });
 			
 	$.get('/getGraphData',parameters,function(data){	
-			buildChart(data);
-			buildTable(tableData);
-			buildDonutChart(donutData);
+		buildChart(data);
+		buildStatTable(tableData);
+		buildDonutChart(donutData);
+		buildEventTable(bolusEventData);
 	});
 });
 
@@ -198,18 +290,18 @@ function buildChart(data){
 	});
 }
 
-function buildTable(data){
+function buildStatTable(data){
 	for(var i = 0; i < data.length; i++){
 		if(i%4==0){
 			if(i==0){
-				$("#tableHeader").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
+				$("#statTableHeader").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
 																+"<th class=\"info\">" + data[i]["value"] + "</th></tr>");
 			}else{
-				$("#tableBody").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
+				$("#statTableBody").append("<tr><th class=\"info\">" + data[i]["title"] + "</th>"
 																+"<th class=\"info\">" + data[i]["value"] + "</th></tr>");
 			}
 		}else{
-			$("#tableBody").append("<tr><td>" + data[i]["title"] + "</td><td>" + data[i]["value"] + "</td></tr>");
+			$("#statTableBody").append("<tr><td>" + data[i]["title"] + "</td><td>" + data[i]["value"] + "</td></tr>");
 		}
 	}
 }
@@ -234,4 +326,38 @@ function buildDonutChart(data){
 		"labelText": "[[title]]: [[value]]U",
 		"balloonText": "[[percents]]%"
 	});
+}
+
+function buildEventTable(data){
+	for(var i = 0; i < bolusEventRowNames.length; i++){
+		var id = i;
+		
+		var s = "";
+		if(i >=2 && i <= 6){
+			s = "bolus";
+		}else if(i >= 7 && i <= 9){
+			s = "food";
+		}else if(i >= 10 && i <= 14){
+			s = "bgl";
+		}
+		
+		var bottom = "";
+		if(i == 1 || i == 6 || i == 9 || i == 14){
+			bottom = "bottom";
+		}
+		
+		$("#eventTableBody").append("<tr id =\"" + id + "\" class=\"" + bottom + "\"><th class=\"" + s + "\">" + bolusEventRowNames[i] + "</th></tr>");
+	}
+	
+	for(var j = 0; j < data.length; j++){
+		var i = 0;
+		for(var propName in data[j]){		
+			$("#eventTableBody>#"+i+"").append("<td>" + data[j][propName] + "</td>");
+			i++;
+		}
+	}
+	
+	for(var h = 0; h < 7; h++)
+		for(var k = 0; k < 16; k++)
+			$("#eventTableBody>#"+k+"").append("<td></td>");
 }

@@ -16,8 +16,12 @@ block bodyContent
 				| Date: 
 				input#datepicker(type='text')
 			#chartdiv
-			#tablediv
+			#statisticsdiv
 				table#graphTable.table.table-bordered.table-striped
-					thead#tableHeader
-					tbody#tableBody
+					thead#statTableHeader
+					tbody#statTableBody
 				#bolusGraph
+		.container
+			div#boluseventsdiv
+				table#eventTable.table.table-bordered
+					tbody#eventTableBody
