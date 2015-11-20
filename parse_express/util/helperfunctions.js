@@ -9,7 +9,7 @@ exports.getData = function(fileName){
 	var fs = require('fs');
 	
 	var file = fs.readFileSync("public/files/"+ fileName).toString();
-	if(fileName == "realData.csv")
+	if(fileName == "realData.csv")	//DEBUG
 		file = getTheRightData(file);
 	
 	return baby.parse(file, {	header: true,					//First row will be interpreted as field names.

@@ -36,8 +36,9 @@ var donutData = [{
   },{
     "title": "Food",
     "value": 23.3,
-		"color": "#b948e9"
-  }];
+		"color": "#d38df1"
+  }
+];
 
 var bolusEventRowNames = [
 	"Bolus Event",
